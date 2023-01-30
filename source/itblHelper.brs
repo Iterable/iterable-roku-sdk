@@ -1,21 +1,21 @@
-function OmniInitializeSDK(omniApiKey as string, omniApiHost as string, packageName as string)
+function ItblInitializeSDK(itblApiKey as string, itblApiHost as string, packageName as string)
     m.lastFocusedItem = invalid
-    m.omniConfig = {
-        "apiKey" : omniApiKey
-        "apiHost" : omniApiHost
+    m.itblConfig = {
+        "apiKey" : itblApiKey
+        "apiHost" : itblApiHost
         "packageName" : packageName
     }
     m.messageStatus = {"status": "", "count" :0 }
-    m._omniSDK = createLib("OmniSDK","pkg:/source/omni-sdk.zip")
+    m._itblSDK = createLib("ItblSDK","pkg:/source/itbl-sdk.zip")
     m.setUserInfoEmail = invalid
     m.setUserId = invalid
-    m.IsOmniDialogDisplayed = false
+    m.IsItblDialogDisplayed = false
 end function
 
-function OmniSetEmailOrUserId(userInfo = invalid as object)
+function ItblSetEmailOrUserId(userInfo = invalid as object)
     if userInfo = invalid then userInfo = {}
-    if m.omniDialog <> invalid
-        status = m.omniDialog.callFunc("OmniSetUserInfo", userInfo)
+    if m.itblDialog <> invalid
+        status = m.itblDialog.callFunc("ItblSetUserInfo", userInfo)
     else
         status = {"status": "waiting", "message": "Library is not yet loaded."}
     end if
@@ -23,34 +23,34 @@ function OmniSetEmailOrUserId(userInfo = invalid as object)
     return status
 end function
 
-function OmniOnApplicationLoaded()
-    print "OmniOnApplicationLoaded "
+function ItblOnApplicationLoaded()
+    print "ItblOnApplicationLoaded "
     response = {
         status : "NOT_LOADED"
         success : false,
         message : "Loading Library"
     }
-    if m._omniSDK <> invalid
-        if m._omniSDK.loadStatus = "failed"
+    if m._itblSDK <> invalid
+        if m._itblSDK.loadStatus = "failed"
             response = {
                 status : "failed"
                 success : false,
                 message : "Failed to load sdk"
             }
-        else if m._omniSDK.loadStatus = "ready"
-            if m.IsOmniDialogDisplayed
+        else if m._itblSDK.loadStatus = "ready"
+            if m.IsItblDialogDisplayed
                 response = {
                     status : "closed"
                     success : false,
                     message : "Dialog can be displayed only once."
                 }
-            else if m.omniDialog = invalid
+            else if m.itblDialog = invalid
                 response = {
                     status : "initilizing"
                     success : false,
                     message : "Pending to initiate"
                 }
-            else if m.omniDialog.dialogLoaded = true
+            else if m.itblDialog.dialogLoaded = true
                 response = {
                     status : m.messageStatus.status
                     success : false,
@@ -95,14 +95,14 @@ end function
 
 sub ShowDialog()
     m.lastFocusedItem = FindFocusedItem(m.top)
-    m.omniDialog.callFunc("OmniShowInApp")
-    m.top.appendChild(m.omniDialog)
-    m.omniDialog.setFocus(true)
+    m.itblDialog.callFunc("ItblShowInApp")
+    m.top.appendChild(m.itblDialog)
+    m.itblDialog.setFocus(true)
 end sub
 
-function OmniApplicationSetFocus()
-    if m.omniDialog <> invalid
-      m.omniDialog.callFunc("OmniDialogSetFocus")
+function ItblApplicationSetFocus()
+    if m.itblDialog <> invalid
+      m.itblDialog.callFunc("ItblDialogSetFocus")
     end if
 end function
 
@@ -119,25 +119,25 @@ end function
 
 sub _onLoadStatusChanged(event as dynamic)
     loadStatus = event.getData()
-    print "[ omni SDK ] - load status " loadStatus
+    print "[ itbl SDK ] - load status " loadStatus
     if loadStatus = "ready"
-        m._omniSDK.unobserveField("loadStatus")
-        SetupOmniDialog()
+        m._itblSDK.unobserveField("loadStatus")
+        SetupItblDialog()
     end if
 end sub
 
-sub SetupOmniDialog()
-    print "SetupOmniDialog"
-    m.omniDialog = CreateObject("roSGNode", "OmniSDK:OmniSDK")
-    m.omniDialog.config = m.omniConfig
-    m.omniDialog.observeField("messageStatus", "OnMessageStatus")
-    m.omniDialog.observeField("closeDialog", "OnCloseDialog")
-    m.omniDialog.observeField("clickEvent", "OnClickEvent")
+sub SetupItblDialog()
+    print "SetupItblDialog"
+    m.itblDialog = CreateObject("roSGNode", "ItblSDK:ItblSDK")
+    m.itblDialog.config = m.itblConfig
+    m.itblDialog.observeField("messageStatus", "OnMessageStatus")
+    m.itblDialog.observeField("closeDialog", "OnCloseDialog")
+    m.itblDialog.observeField("clickEvent", "OnClickEvent")
     if m.setUserInfoEmail <> invalid then
-        m.omniDialog.callFunc("OmniSetUserInfo", m.setUserInfoEmail)
+        m.itblDialog.callFunc("ItblSetUserInfo", m.setUserInfoEmail)
         m.setUserInfoEmail = invalid
     else
-        m.omniDialog.callFunc("OmniInitialize")
+        m.itblDialog.callFunc("ItblInitialize")
     end if
 end sub
 
@@ -161,38 +161,45 @@ sub OnMessageStatus(event as dynamic)
     messageStatus = event.getData()
     if messageStatus <> invalid
       m.messageStatus = messageStatus
-      print "OnOmniMessage LoadStatus "messageStatus
+      print "OnItblMessage LoadStatus "messageStatus
     end if
 end sub
 
 sub OnCloseDialog(event as dynamic)
   closeDialog = event.getData()
   print "OnCloseDialog "
-  if m.omniDialog <> invalid and closeDialog = true
-      CloseOmniSDKDialog(false)
+  if m.itblDialog <> invalid and closeDialog = true
+      CloseItblSDKDialog(false)
   end if
 end sub
 
 sub OnClickEvent(event as dynamic)
     clickEvent = event.getData()
-    m.top.OmniClickEvent = clickEvent
-    CloseOmniSDKDialog(true)
+    m.top.ItblClickEvent = clickEvent
+    CloseItblSDKDialog(true)
 end sub
 
-sub CloseOmniSDKDialog(IsClickEvent as boolean)
-    m.omniDialog.unObserveField("messageStatus")
-    m.omniDialog.unObserveField("closeDialog")
-    m.omniDialog.unObserveField("clickEvent")
-    m.top.removeChild(m.omniDialog)
-    m.omniDialog = invalid
+sub ItblCustomEventTrack(eventName = "" as string, data = invalid as object)
+    print "ItblCustomEventTrack"
+    if m.itblDialog <> invalid
+      m.itblDialog.callFunc("CallItblTrack", eventName, data)
+    end if
+end sub
+
+sub CloseItblSDKDialog(IsClickEvent as boolean)
+    m.itblDialog.unObserveField("messageStatus")
+    m.itblDialog.unObserveField("closeDialog")
+    m.itblDialog.unObserveField("clickEvent")
+    m.top.removeChild(m.itblDialog)
+    m.itblDialog = invalid
     data = {
         "ButtonClick" : IsClickEvent
         "BackClick" : not IsClickEvent
     }
     SetFocusedToLastItem()
-    m.top.OmniCloseEvent = data
+    m.top.ItblCloseEvent = data
     m.lastFocusedItem = invalid
-    m.IsOmniDialogDisplayed = true
+    m.IsItblDialogDisplayed = true
 end sub
 
 sub SetFocusedToLastItem()

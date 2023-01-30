@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="ItblSDK" extends="Group">
+    <script type="text/brightscript" uri="pkg:/components/ItblSDK.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/itblRegistry/itblRegistryManager.brs"/>
+
+    <interface>
+        <field id="messageStatus" type="assocarray"/>
+        <field id="closeDialog" type="boolean" />
+        <field id="dialogLoaded" type="boolean" value="false"/>
+        <field id="clickEvent" type="assocarray"/>
+        <field id="config" type="assocarray" alwaysNotify="true" OnChange="OnConfigure"/>
+
+        <function name="ItblInitialize" />
+        <function name="ItblSetUserInfo" />
+        <function name="ItblShowInApp" />
+        <function name="ItblDialogSetFocus" />
+        <function name="CallItblTrack" />
+    </interface>
+
+    <children>
+        <ItblCustomDialog id="itblDialog" visible="false" />
+
+    </children>
+
+</component>

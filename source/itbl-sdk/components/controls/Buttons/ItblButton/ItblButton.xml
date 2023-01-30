@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="ItblButton" extends="Group">
+    <script type="text/brightscript" uri="ItblButton.brs"/>
+
+    <script type="text/brightscript" uri="pkg:/source/itblHelpers/itblHelpers.brs"/>
+
+    <interface>
+        <field id="buttonText" type="string" alias="lText.text" alwaysNotify="true"/>
+        <field id="buttonDeeplink" type="string" />
+        <field id="deepLink" type="string" />
+        <field id="borderData" type="assocarray" alwaysNotify="true" onChange="OnBorderDataChange"/>
+    </interface>
+
+    <children>
+      <Poster id="rFillBox" visible="true"/>
+      <ItblBorder id="gBorder" visible="false"/>
+      <Label id="lText" horizAlign="center" vertAlign="center"/>
+    </children>
+</component>

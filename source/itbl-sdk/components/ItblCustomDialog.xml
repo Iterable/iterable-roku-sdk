@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="ItblCustomDialog" extends="Group">
+    <script type="text/brightscript" uri="pkg:/components/ItblCustomDialog.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/itblHelpers/itblHelpers.brs"/>
+
+    <!-- <script type="text/brightscript" uri="pkg:/itblHelpers/itblHelpers.brs"/> -->
+
+    <interface>
+        <field id="content" type="assocarray" onChange="OnContentSet" alwaysNotify="true"/>
+        <field id="messageStatus" type="assocarray"/>
+        <field id="closeDialog" type="boolean" />
+        <field id="clickEvent" type="assocarray"/>
+        <function name="ShowHideErrorMessage"/>
+
+    </interface>
+
+    <children>
+
+            <Group id="gContainer">
+                <Poster id="background" uri="pkg:/ItblImages/focus/white_fill_corner_radius_10.9.png" blendColor="#808080" translation="[-34,-34]"/>
+                <Group id="gMainGroup">
+                    <LayoutGroup id="mainDialog" layoutDirection="vert" itemSpacings="32">
+                        <Poster id="pImage" width="540" height="304" loadWidth="540" loadHeight="304" loadDisplayMode="scaleToZoom"  uri="pkg:/ItblImages/focus/white_fill_corner_radius_10.9.png" blendColor="#989898" />
+                        <LayoutGroup id= "lgMessage" layoutDirection="vert" itemSpacings="12"/>
+                        <LayoutGroup id= "lgButton" layoutDirection="vert" itemSpacings="12" vertAlignment="center"/>
+                    </LayoutGroup>
+                </Group>
+            </Group>
+    </children>
+
+</component>

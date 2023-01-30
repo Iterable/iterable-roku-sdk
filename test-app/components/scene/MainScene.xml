@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2016 Roku Corp. All Rights Reserved. -->
+<component name="MainScene" extends="Scene">
+	<script type="text/brightscript" uri="pkg:/components/scene/MainScene.brs"/>
+	<script type="text/brightscript" uri="pkg:/source/itblHelper.brs"/>
+
+	<interface>
+		<!-- This event triggered when user click on any button on dialog.-->
+		<field id="ItblClickEvent" type="assocArray" alwaysNotify="true" OnChange="OnItblClickEvent"/>
+		<!-- This event triggered when user close dialog.-->
+		<field id="ItblCloseEvent" type="assocArray" alwaysNotify="true" OnChange="OnItblCloseEvent"/>
+		<!-- This function can be called from any component or page to show itbl dialog.-->
+		<function name="ItblOnApplicationLoaded" />
+	</interface>
+
+	<children>
+			<Poster id="pMainPoster" width="1920" height="1080" loadWidth= "1920" loadHeight="1080" loadDisplayMode="scaleToZoom"/>
+			<Poster id="pOverlayPoster" width="1920" height="1080" loadWidth= "1920" loadHeight="1080" loadDisplayMode="scaleToFit"/>
+			<Poster id="pLogo" uri="pkg:/images/brand/logo.png" width="281" height="219" loadDisplayMode="scaleToFit" translation="[1500,33]"/>
+
+			<Group id="topSection" visible="true" translation="[80,0]">
+				<Label
+					id="lHeading" Height="30"
+					text="Itbl Demo Splash Page"
+					lineSpacing="0" vertAlign="center"
+					translation="[0,100]"
+				/>
+
+				<LayoutGroup layoutDirection="horiz"
+					itemSpacings="30" translation="[0,180]">
+						<Label
+							id="lWithPerson" Height="30"
+							text="With John"
+							lineSpacing="0" vertAlign="center"
+						/>
+						<Label
+							id="idSpace"
+							text=" • " Height="40" vertAlign="center"
+							lineSpacing="0"
+						/>
+						<Label
+							id="lDuration"
+							text="Duration: 30 min" vertAlign="center" Height="30"
+							lineSpacing="0"
+						/>
+						<Label
+							id="idSpace"
+							text=" • " Height="40" vertAlign="center"
+							lineSpacing="0"
+						/>
+						<LayoutGroup id="intensityRating" layoutDirection="horiz"
+							itemSpacings="5">
+								<Poster id="ratingPoster1" width="22" height="30" uri="pkg://images/overlay/full_drop.png"/>
+								<Poster id="ratingPoster2" width="22" height="30" uri="pkg://images/overlay/full_drop.png"/>
+								<Poster id="ratingPoster3" width="22" height="30" uri="pkg://images/overlay/full_drop.png"/>
+								<Poster id="ratingPoster4" width="22" height="30" uri="pkg://images/overlay/full_drop.png"/>
+								<Poster id="ratingPoster5" width="22" height="30" uri="pkg://images/overlay/full_drop.png"/>
+						</LayoutGroup>
+				</LayoutGroup>
+				<LayoutGroup layoutDirection="horiz"
+					itemSpacings="30" translation="[0,260]">
+						<Label
+							id="lEquipment" Height="30"
+							text="Equipment "
+							lineSpacing="0" vertAlign="center"
+						/>
+						<Label
+							id="idSpace"
+							text=" • " Height="40" vertAlign="center"
+							lineSpacing="0"
+						/>
+						<Label
+							id="lEquipmentTitle"
+							text="Title" vertAlign="center" Height="30"
+							lineSpacing="0"
+						/>
+				</LayoutGroup>
+
+				<Label
+					id="lTopDescription" width="500" wrap="true"
+					text="This is a demo splash page by Itbl just for demo purposes. This is not to be use anywhere else."
+					lineSpacing="0" vertAlign="center" translation="[0,320]"
+				/>
+
+				<LayoutGroup layoutDirection="vert"
+					itemSpacings="30" translation="[0,450]">
+						<Poster id="pWatchnow" uri="pkg:/images/focus/rectPoster.png" blendColor="#3268A9" width="300" height="80">
+								<Label id="lWatchNow" text="Watch Now" width="300" height="80" horizAlign="center" vertAlign="center" color="#FFFFFF"/>
+						</Poster>
+
+						<Poster id="pMoredetails" uri="pkg:/images/focus/rectPoster.png" blendColor="#3268A9" width="300" height="80">
+								<Label id="lMoreDetails" text="More Details" width="300" height="80" horizAlign="center" vertAlign="center" color="#FFFFFF"/>
+						</Poster>
+				</LayoutGroup>
+
+				<LayoutGroup layoutDirection="horiz"
+					itemSpacings="30" translation="[0,720]">
+						<Label id="lDeepLinkLabel"
+							Height="30"
+							text="DeepLink Value : "
+							lineSpacing="0" vertAlign="center"
+						/>
+
+						<Label
+							id="lDeepLinkValue"
+							text="" vertAlign="center" Height="30"
+							lineSpacing="0"
+						/>
+				</LayoutGroup>
+
+			</Group>
+
+			<Timer
+				id="Timer"
+				duration="7"
+				repeat="false"/>
+
+			<BusySpinner id="bsPreloader" translation="[860,420]" control="start" clockwise="true" spinInterval="0.8" visible="false"/>
+
+	</children>
+</component>

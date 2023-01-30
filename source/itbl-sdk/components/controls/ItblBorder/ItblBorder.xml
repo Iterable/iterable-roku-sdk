@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="ItblBorder" extends="Group" >
+    <script type="text/brightscript" uri="ItblBorder.brs"/>
+
+    <script type="text/brightscript" uri="pkg:/source/itblHelpers/itblHelpers.brs"/>
+
+    <interface>
+        <field id="borderData" type="assocarray" alwaysNotify="true" onChange="OnBorderDataChange" />
+        <field id="color" type="string" alwaysNotify="true" onChange="OnColorChange" />
+    </interface>
+
+    <children>
+        <Rectangle id="rTop" color="#FFFFFF"/>
+        <Rectangle id="rRight" color="#FFFFFF"/>
+        <Rectangle id="rBottom" color="#FFFFFF"/>
+        <Rectangle id="rLeft" color="#FFFFFF"/>
+    </children>
+</component>
