@@ -1,8 +1,8 @@
 sub init()
 end sub
 
-function ItblGetMessage() as void
-    response = ItblAPI().ItblGetMessage(m.top.hostUrl, m.top.apiKey, m.top.requestData)
+function ItblGetPriorityMessage() as void
+    response = ItblAPI().ItblGetPriorityMessage(m.top.hostUrl, m.top.apiKey, m.top.requestData)
     m.top.result = response
 end function
 
