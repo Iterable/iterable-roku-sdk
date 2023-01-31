@@ -7,10 +7,7 @@
 ### Project Structure
 -----
 ```
-├── source
-  ├── itbl-sdk/ (main sdk code)
-  ├── itblHelpers.brs (helper methods)
-  ├── main.brs (app root main file)
+├── source (actual sdk)
 ├── test-app (tester-app, wraps the parent level source folder)
 ```
 
