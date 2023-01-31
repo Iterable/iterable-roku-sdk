@@ -8,7 +8,7 @@
 -----
 ```
 ├── source (actual sdk)
-├── test-app (tester-app, wraps the parent level source folder)
+├── test-app (tester-app, wraps the adjacent source folder)
 ```
 
 ### Getting started
