@@ -89,7 +89,7 @@ end sub
 
 sub Initilize()
     'STEP 1 : To Initilize Itbl SDK'
-    ItblInitializeSDK("5968faa5775b4624a58fae1c22133f72", "https://api.iterable.com", "itbl")
+    ItblInitializeSDK("YOUR_API_KEY", "https://api.iterable.com", "itbl")
     ' ItblInitializeSDK("dasfds", "https://test-itbl2.free.beeceptor.com", "test")
     'STEP 2 : To Initilize Itbl SDK'
     status = ItblSetEmailOrUserId({"email":"newuser@test.com"})
