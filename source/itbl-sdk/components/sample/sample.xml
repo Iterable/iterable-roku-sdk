@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<component name="sample" extends="Scene">
+	<script type="text/brightscript" uri="pkg:/components/sample/sample.brs"/>
+	<script type="text/brightscript" uri="pkg:/source/itblHelper.brs"/>
+
+	<interface>
+		<!-- This event triggered when user click on any button on dialog.-->
+		<field id="ItblClickEvent" type="assocArray" alwaysNotify="true" OnChange="OnItblClickEvent"/>
+		<!-- This event triggered when user close dialog.-->
+		<field id="ItblCloseEvent" type="assocArray" alwaysNotify="true" OnChange="OnItblCloseEvent"/>
+		<!-- This function can be called from any component or page to show itbl dialog.-->
+		<function name="ItblOnApplicationLoaded" />
+	</interface>
+
+	<children>
+	</children>
+
+</component>

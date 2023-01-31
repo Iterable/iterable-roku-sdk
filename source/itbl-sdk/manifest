@@ -1,0 +1,7 @@
+title=Itbl SDK
+subtitle=Itbl SDK
+major_version=1
+minor_version=1
+build_version=0
+sg_component_libs_provided=ItblSDK
+hidden=1

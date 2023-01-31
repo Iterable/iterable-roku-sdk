@@ -1,0 +1,14 @@
+title=Itbl
+major_version=01
+minor_version=00
+build_version=10
+mm_icon_focus_fhd=pkg:/images/assets/poster_fhd.png
+mm_icon_focus_hd=pkg:/images/assets/poster_hd.png
+mm_icon_focus_sd=pkg:/images/assets/poster_sd.png
+splash_screen_fhd=pkg:/images/assets/splash_fhd.jpg
+splash_screen_hd=pkg:/images/assets/splash_hd.jpg
+splash_screen_sd=pkg:/images/assets/splash_sd.jpg
+splash_min_time=2500
+ui_resolutions=fhd
+uri_resolution_autosub=$$RES$$,sd,hd,fhd
+supports_input_launch=1
