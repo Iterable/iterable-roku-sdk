@@ -44,7 +44,7 @@ Release notes:
   Release notes for significant updates to the SDK. Also, information about 
   deprecation dates and support windows.
 - [GitHub — Releases](https://github.com/Iterable/iterable-roku-sdk/releases) -
-  Release notes for all releases.
+  This repository's **Releases** page. Release notes for all versions of the SDK.
 
 Support policies:
 
