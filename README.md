@@ -1,5 +1,7 @@
 ![Iterable logo](https://raw.githubusercontent.com/Iterable/swift-sdk/master/images/Iterable-Logo.png "Iterable Logo")
 
+[![License](https://img.shields.io/github/license/Iterable/swift-sdk)](https://opensource.org/licenses/MIT)
+
 # Iterable's Roku SDK
 
 [Iterable](https://www.iterable.com) is a growth marketing platform that helps
@@ -36,7 +38,7 @@ For more information about Iterable's Roku SDK, read:
 For sample code, look at the [`/test-app`](https://github.com/Iterable/iterable-roku-sdk/tree/main/test-app) 
 folder of this repository.
 
-## Release notes, support and troubleshooting
+## Release notes, support, and troubleshooting
 
 Release notes:
 
@@ -56,7 +58,7 @@ Questions? Contact your Iterable customer success manager.
 ## License
 
 This SDK is released under the MIT License. For more information, read 
-[`LICENSE`](https://github.com/Iterable/swift-sdk/blob/master/LICENSE.md).
+[`LICENSE`](LICENSE.md).
 
 ## Want to contribute?
 
