@@ -9,6 +9,15 @@ web push notification campaigns to your customers.
 
 With this SDK, you can send in-app messages to your Roku channel.
 
+## Repository structure
+
+This repository has the following structure:
+
+```
+├── source (The SDK)
+├── test-app (A sample Roku channel that includes the SDK)
+```
+
 ## Supported Roku versions
 
 This SDK supports Roku OS 10.5 and higher.
