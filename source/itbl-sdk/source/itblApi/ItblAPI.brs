@@ -8,7 +8,7 @@ end function
 
 function ItblAPI__New()
     this = {}
-    this.ItblGetMessage = ItblAPI__ItblGetMessage
+    this.ItblGetPriorityMessage = ItblAPI__ItblGetPriorityMessage
     this.ItblTrack = ItblAPI__ItblTrack
     this.ItblTrackInAppDelivery = ItblAPI__ItblTrackInAppDelivery
     this.ItblTrackInAppOpen = ItblAPI__ItblTrackInAppOpen
@@ -19,8 +19,8 @@ function ItblAPI__New()
     return this
 end function
 
-function ItblAPI__ItblGetMessage(hostUrl, apiKey, body)
-    path = hostUrl + "/api/inApp/getMessages"
+function ItblAPI__ItblGetPriorityMessage(hostUrl, apiKey, body)
+    path = hostUrl + "/api/inApp/getPriorityMessage"
     headers = {
         "Accept": "application/json",
         "API-KEY": apiKey,

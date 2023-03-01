@@ -47,7 +47,7 @@ function ItblInitialize()
     m.top.messageStatus = { "status": "init", "count": 0, message: ""  }
     userInfo = getUserInfoFromRegistry()
     if userInfo <> invalid
-        CallItblGetMessage(userInfo, m.messageCount)
+        CallItblGetPriorityMessage(userInfo)
         m.top.messageStatus = { "status": "loading", "count": 0, message: ""  }
     else
         m.top.messageStatus = { "status": "waiting", "count": 0, message: "Call ItblSetEmailOrUserId to set either email or userId." }
@@ -135,16 +135,15 @@ sub CallItblUpdateUser(userInfo as object)
     CallItblApi(requestData, "ItblUpdateUser", "OnItblUpdateUserAPIResponse")
 end sub
 
-sub CallItblGetMessage(userInfo as object, count as integer)
+sub CallItblGetPriorityMessage(userInfo as object)
     if m.itblGetmessage <> invalid
         m.itblGetmessage.control = "STOP"
     end if
     requestData = userInfo
-    requestData["count"] = count
     requestData["platform"] = m.platform
     requestData["packageName"] = m.appPackageName
     requestData["SDKVersion"] = m.sdkVersion
-    m.itblGetmessage = CallItblApi(requestData, "ItblGetMessage", "OnItblGetMessageAPIResponse")
+    m.itblGetmessage = CallItblApi(requestData, "ItblGetPriorityMessage", "OnItblGetPriorityMessageAPIResponse")
 end sub
 
 sub CallItblTrack(eventName as string, data as object)
@@ -225,7 +224,7 @@ sub OnItblUpdateUserAPIResponse(msg as Object)
     if (result <> invalid and result.ok)
         userInfo = getUserInfo(task.requestData)
         setUserInfo(userInfo)
-        CallItblGetMessage(userInfo, m.messageCount)
+        CallItblGetPriorityMessage(userInfo)
         m.top.messageStatus = { "status": "loading", "count": 0, message: ""  }
     else
         m.RegistryManager.ClearUserInfo()
@@ -233,7 +232,7 @@ sub OnItblUpdateUserAPIResponse(msg as Object)
     end if
 end sub
 
-sub OnItblGetMessageAPIResponse(msg as Object)
+sub OnItblGetPriorityMessageAPIResponse(msg as Object)
     result = msg.getData()
     if (result <> invalid and result.ok)
         m.response = result.data
