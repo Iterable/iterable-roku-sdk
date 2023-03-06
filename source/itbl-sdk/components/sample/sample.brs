@@ -1,17 +1,17 @@
 sub init() as void
-    Initilize()
+    Initialize()
 end sub
 
 
-sub Initilize()
-    'STEP 1 : To Initilize Itbl SDK'
+sub Initialize()
+    'STEP 1 : To Initialize Itbl SDK'
     ItblInitializeSDK("YOUR_API_KEY", "https://api.iterable.com", "customerPackageName")
-    'STEP 2 : To Initilize Itbl SDK with email'
+    'STEP 2 : To Initialize Itbl SDK with email'
     status = ItblSetEmailOrUserId({"email":"test@test.com"})
 
-    'STEP 2 : To Initilize Itbl sdk by setting email/userId to empy'
+    'STEP 2 : To Initialize Itbl sdk by setting email/userId to empy'
     ' ItblSetEmailOrUserId(invalid)
-    'STEP 2 : To Initilize Itbl sdk with userId'
+    'STEP 2 : To Initialize Itbl sdk with userId'
     ' ItblSetEmailOrUserId({"userId":"1234"})
     'STEP 2 : When Itbl sdk set with email and userId. It will give error and clear details from registry'
     ' status = ItblSetEmailOrUserId({"email":"test@test.com","userId":"test"})

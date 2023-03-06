@@ -2,7 +2,7 @@ sub init()
     setLocals()
     SetControls()
     SetObserves()
-    Initilize()
+    Initialize()
 end sub
 
 sub setLocals()
@@ -30,7 +30,7 @@ sub SetObserves()
     getRequestDeviceInfo()
 end sub
 
-sub Initilize()
+sub Initialize()
     m.itblDialog.visible = false
 end sub
 

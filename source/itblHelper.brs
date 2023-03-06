@@ -46,7 +46,7 @@ function ItblOnApplicationLoaded()
                 }
             else if m.itblDialog = invalid
                 response = {
-                    status : "initilizing"
+                    status : "initializing"
                     success : false,
                     message : "Pending to initiate"
                 }

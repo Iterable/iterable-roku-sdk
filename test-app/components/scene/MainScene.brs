@@ -5,7 +5,7 @@ sub init()
     setTheme()
     SetObserves()
     SetDefaultFocus()
-    Initilize()
+    Initialize()
 end sub
 
 sub setLocals()
@@ -87,11 +87,11 @@ sub SetDefaultFocus()
     m.pWatchnow.setFocus(true)
 end sub
 
-sub Initilize()
-    'STEP 1 : To Initilize Itbl SDK'
+sub Initialize()
+    'STEP 1 : To Initialize Itbl SDK'
     ItblInitializeSDK("YOUR_API_KEY", "https://api.iterable.com", "itbl")
     ' ItblInitializeSDK("dasfds", "https://test-itbl2.free.beeceptor.com", "test")
-    'STEP 2 : To Initilize Itbl SDK'
+    'STEP 2 : To Initialize Itbl SDK'
     status = ItblSetEmailOrUserId({"email":"newuser@test.com"})
     print "ItblSetEmailOrUserId status "status
     ' Or we can call with userId as below '
