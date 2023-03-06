@@ -2,7 +2,7 @@ sub init()
     setLocals()
     SetControls()
     setTheme()
-    SetObserves()
+    SetObservers()
     SetDefaultFocus()
 end sub
 
@@ -40,7 +40,7 @@ end sub
 sub setTheme()
 end sub
 
-sub SetObserves()
+sub SetObservers()
     m.top.ObserveField("focusedChild", "OnFocusedChildChanged")
 end sub
 

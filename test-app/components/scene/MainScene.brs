@@ -3,7 +3,7 @@ sub init()
     setLocals()
     SetControls()
     setTheme()
-    SetObserves()
+    SetObservers()
     SetDefaultFocus()
     Initialize()
 end sub
@@ -77,7 +77,7 @@ sub setTheme()
     m.bsPreloader.poster.height = "160"
 end sub
 
-sub SetObserves()
+sub SetObservers()
     m.timer.observeField("fire", "OnTimerFire")
 end sub
 

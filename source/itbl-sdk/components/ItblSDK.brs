@@ -1,7 +1,7 @@
 sub init()
     setLocals()
     SetControls()
-    SetObserves()
+    SetObservers()
     Initialize()
 end sub
 
@@ -22,7 +22,7 @@ sub SetControls()
 end sub
 
 
-sub SetObserves()
+sub SetObservers()
     m.itblDialog.observeField("messageStatus", "OnMessageStatus")
     m.itblDialog.observeField("closeDialog", "OnCloseDialog")
     m.itblDialog.observeField("clickEvent", "OnClickEvent")
