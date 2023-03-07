@@ -1,26 +1,20 @@
 sub init() as void
-    Initilize()
+    Initialize()
 end sub
 
 
-sub Initilize()
-    'STEP 1 : To Initilize Itbl SDK'
-    ItblInitializeSDK("YOUR_API_KEY", "https://api.iterable.com", "customerPackageName")
-    'STEP 2 : To Initilize Itbl SDK with email'
-    status = ItblSetEmailOrUserId({"email":"test@test.com"})
-
-    'STEP 2 : To Initilize Itbl sdk by setting email/userId to empy'
-    ' ItblSetEmailOrUserId(invalid)
-    'STEP 2 : To Initilize Itbl sdk with userId'
-    ' ItblSetEmailOrUserId({"userId":"1234"})
-    'STEP 2 : When Itbl sdk set with email and userId. It will give error and clear details from registry'
-    ' status = ItblSetEmailOrUserId({"email":"test@test.com","userId":"test"})
+sub Initialize()
+    'STEP 1: Initialize Iterable's Roku SDK
+    ItblInitializeSDK("YOUR_API_KEY", "https://api.iterable.com", "com.example.my-roku-channel")
+    'STEP 2: Identify the user by email or userId
+    status = ItblSetEmailOrUserId({"email":"user@example.com"})
+    'ItblSetEmailOrUserId({"userId":"1234"})
 end sub
 
 
 'Add ItblOnApplicationLoaded function call in specific function. So when that function called it will show itbl dialog.'
 function FooBar()
-    'STEP 3 : To Load SDK and show dialog'
+    'STEP 3 : Show the in-app message'
     response = ItblOnApplicationLoaded()
     print "response : "response
 end function

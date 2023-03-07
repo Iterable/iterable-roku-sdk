@@ -35,18 +35,18 @@ function ItblOnApplicationLoaded()
             response = {
                 status : "failed"
                 success : false,
-                message : "Failed to load sdk"
+                message : "Failed to load SDK"
             }
         else if m._itblSDK.loadStatus = "ready"
             if m.IsItblDialogDisplayed
                 response = {
                     status : "closed"
                     success : false,
-                    message : "Dialog can be displayed only once."
+                    message : "Dialog can be displayed only once"
                 }
             else if m.itblDialog = invalid
                 response = {
-                    status : "initilizing"
+                    status : "initializing"
                     success : false,
                     message : "Pending to initiate"
                 }
@@ -54,7 +54,7 @@ function ItblOnApplicationLoaded()
                 response = {
                     status : m.messageStatus.status
                     success : false,
-                    message : "Dialog is already display on screen."
+                    message : "Dialog is already displayed on screen"
                 }
             else
                 if m.messageStatus.status <> "loaded"
@@ -68,7 +68,7 @@ function ItblOnApplicationLoaded()
                         response = {
                             status : m.messageStatus.status
                             success : false,
-                            message : "Dialog is already display on screen."
+                            message : "Dialog is already displayed on screen"
                         }
                     end if
                 else
