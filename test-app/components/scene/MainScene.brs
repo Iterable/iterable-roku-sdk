@@ -88,24 +88,17 @@ sub SetDefaultFocus()
 end sub
 
 sub Initialize()
-    'STEP 1 : To Initialize Itbl SDK'
-    ItblInitializeSDK("YOUR_API_KEY", "https://api.iterable.com", "itbl")
-    ' ItblInitializeSDK("dasfds", "https://test-itbl2.free.beeceptor.com", "test")
-    'STEP 2 : To Initialize Itbl SDK'
-    status = ItblSetEmailOrUserId({"email":"newuser@test.com"})
-    print "ItblSetEmailOrUserId status "status
-    ' Or we can call with userId as below '
-    'status = ItblSetEmailOrUserId({"userId":"test"})
-    ' Below one give error if you set both. It required to set either of them.'
-    'status = ItblSetEmailOrUserId({"email":"test@test.com","userId":"test"})
-    ' Below one give error to set proper value. '
-    ' status = ItblSetEmailOrUserId(invalid)
+    'STEP 1: Initialize Iterable's Roku SDK
+    ItblInitializeSDK("YOUR_API_KEY", "https://api.iterable.com", "com.example.my-roku-channel")
+    'STEP 2: Identify the user by email or userId
+    status = ItblSetEmailOrUserId({"email":"user@example.com"})
+    'ItblSetEmailOrUserId({"userId":"1234"})
     m.timer.control = "START"
 end sub
 
 
 function OnTimerFire()
-    'STEP 3 : To Load SDK and show dialog'
+    'STEP 3 : Show the in-app message'
     applicationLoadStatus = ItblOnApplicationLoaded()
     print "ItblOnApplicationLoaded Status "applicationLoadStatus
 
