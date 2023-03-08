@@ -2,6 +2,8 @@
 
 [![License](https://img.shields.io/github/license/Iterable/swift-sdk)](https://opensource.org/licenses/MIT)
 
+# Private Early Access Feature
+
 # Iterable's Roku SDK
 
 [Iterable](https://www.iterable.com) is a growth marketing platform that helps
