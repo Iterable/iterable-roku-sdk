@@ -90,9 +90,12 @@ end sub
 sub Initialize()
     'STEP 1: Initialize Iterable's Roku SDK
     ItblInitializeSDK("YOUR_API_KEY", "https://api.iterable.com", "com.example.my-roku-channel")
-    'STEP 2: Identify the user by email or userId
-    status = ItblSetEmailOrUserId({"email":"user@example.com"})
-    'ItblSetEmailOrUserId({"userId":"1234"})
+    'STEP 2 : To Initilize Itbl SDK'
+    'without JWT
+    'status = ItblSetEmailOrUserId({"email":"newuser@test.com"})
+    'With JWT
+    jwtToken = "YOUR_JWT_HERE"
+    status = ItblSetEmailOrUserId({"email":"roku@test.com", "token": jwtToken})
     m.timer.control = "START"
 end sub
 
