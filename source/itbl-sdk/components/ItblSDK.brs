@@ -11,6 +11,7 @@ sub setLocals()
     m.messageCount = 100
     m.apiHostURL = ""
     m.apiKey = ""
+    m.jwtToken = invalid
     m.RegistryManager = CreateRegistryManager()
     m.platform = "OTT"
     m.appPackageName = ""
@@ -38,6 +39,7 @@ function OnConfigure(event as dynamic)
       data = event.getData()
       m.apiHostURL = data.apiHost
       m.apiKey = data.apiKey
+      m.jwtToken = invalid
       m.appPackageName = data.packageName
 end function
 
@@ -57,6 +59,12 @@ end function
 function ItblSetUserInfo(userInfo as object)
     status = {"status": "initiate", message:""}
     if userInfo <> invalid
+        if userInfo.token <> invalid and userInfo.token <> ""
+            m.jwtToken = userInfo.token
+            userInfo.Delete("token")
+        else 
+            m.jwtToken = invalid
+        end if
         print "ItblSetUserInfo : "userInfo
         if (userInfo.email = invalid and userInfo.userId = invalid)
             m.RegistryManager.ClearUserInfo()
@@ -210,6 +218,7 @@ function CallItblApi(requestData as object, functionName as string, callBack as 
 
     itblApiTask.hosturl = m.apiHostURL
     itblApiTask.apiKey = m.apiKey
+    itblApiTask.jwtToken = m.jwtToken
     itblApiTask.requestData = requestData
     itblApiTask.additionalParams = additionalParams
     itblApiTask.ObserveField("result", callBack)
@@ -217,6 +226,11 @@ function CallItblApi(requestData as object, functionName as string, callBack as 
     return itblApiTask
 end function
 
+function SetErrorMessage(messageStatus, result)
+    if result.error <> invalid and result.error <> "" then messageStatus["message"] = result.error
+    if result.code <> invalid and result.code <> 0 then messageStatus["code"] = result.code
+    m.top.messageStatus = messageStatus
+end function
 
 sub OnItblUpdateUserAPIResponse(msg as Object)
     result = msg.getData()
@@ -228,7 +242,8 @@ sub OnItblUpdateUserAPIResponse(msg as Object)
         m.top.messageStatus = { "status": "loading", "count": 0, message: ""  }
     else
         m.RegistryManager.ClearUserInfo()
-        m.top.messageStatus = { "status": "failed", "count": 0, message: "Failed to update user email/userId."  }
+        messageStatus = { "status": "failed", "count": 0, message: "Failed to update user email/userId."}
+        SetErrorMessage(messageStatus, result)
     end if
 end sub
 
@@ -248,7 +263,8 @@ sub OnItblGetPriorityMessageAPIResponse(msg as Object)
           m.top.messageStatus = { "status": "failed", "count": 0, message: "Response is invalid."  }
         end if
     else
-      m.top.messageStatus = { "status": "failed", "count": 0, message: "Api failed to get meessage."  }
+      messageStatus = { "status": "failed", "count": 0, message: "Api failed to get meessage."  }
+      SetErrorMessage(messageStatus, result)
     end if
     m.itblGetmessage = invalid
 end sub

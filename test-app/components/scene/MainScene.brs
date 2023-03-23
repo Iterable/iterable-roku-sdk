@@ -3,9 +3,9 @@ sub init()
     setLocals()
     SetControls()
     setTheme()
-    SetObservers()
+    SetObserves()
     SetDefaultFocus()
-    Initialize()
+    Initilize()
 end sub
 
 sub setLocals()
@@ -77,7 +77,7 @@ sub setTheme()
     m.bsPreloader.poster.height = "160"
 end sub
 
-sub SetObservers()
+sub SetObserves()
     m.timer.observeField("fire", "OnTimerFire")
 end sub
 
@@ -87,18 +87,33 @@ sub SetDefaultFocus()
     m.pWatchnow.setFocus(true)
 end sub
 
-sub Initialize()
-    'STEP 1: Initialize Iterable's Roku SDK
-    ItblInitializeSDK("YOUR_API_KEY", "https://api.iterable.com", "com.example.my-roku-channel")
-    'STEP 2: Identify the user by email or userId
-    status = ItblSetEmailOrUserId({"email":"user@example.com"})
-    'ItblSetEmailOrUserId({"userId":"1234"})
+sub Initilize()
+    'STEP 1 : To Initilize Itbl SDK'
+    'key for non JWT
+    ' ItblInitializeSDK("5968faa5775b4624a58fae1c22133f72", "https://api.iterable.com", "itbl")
+    'key for JWT
+    ItblInitializeSDK("ee7fd92429e94ff489533fab7e988a2a", "https://api.iterable.com", "itbl")
+    ' ItblInitializeSDK("dasfds", "https://test-itbl2.free.beeceptor.com", "test")
+    'STEP 2 : To Initilize Itbl SDK'
+    'without JWT
+    'status = ItblSetEmailOrUserId({"email":"newuser@test.com"})
+    'With JWT
+    ' JWTTToken = getJWTToken()
+    jwTtoken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAxNjc0NTMsImVtYWlsIjoicm9rdUB0ZXN0LmNvbSIsImlhdCI6MTY3ODk4MTQ1M30.OC5-7DQz7WkhAs5KYH1e09qzfiLTEjAORczOrvzjJQA"
+    status = ItblSetEmailOrUserId({"email":"roku@test.com", "token": jwTtoken})
+    print "ItblSetEmailOrUserId status "status
+    ' Or we can call with userId as below '
+    'status = ItblSetEmailOrUserId({"userId":"test"})
+    ' Below one give error if you set both. It required to set either of them.'
+    'status = ItblSetEmailOrUserId({"email":"test@test.com","userId":"test"})
+    ' Below one give error to set proper value. '
+    ' status = ItblSetEmailOrUserId(invalid)
     m.timer.control = "START"
 end sub
 
 
 function OnTimerFire()
-    'STEP 3 : Show the in-app message'
+    'STEP 3 : To Load SDK and show dialog'
     applicationLoadStatus = ItblOnApplicationLoaded()
     print "ItblOnApplicationLoaded Status "applicationLoadStatus
 

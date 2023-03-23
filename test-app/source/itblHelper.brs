@@ -35,18 +35,18 @@ function ItblOnApplicationLoaded()
             response = {
                 status : "failed"
                 success : false,
-                message : "Failed to load SDK"
+                message : "Failed to load sdk"
             }
         else if m._itblSDK.loadStatus = "ready"
             if m.IsItblDialogDisplayed
                 response = {
                     status : "closed"
                     success : false,
-                    message : "Dialog can be displayed only once"
+                    message : "Dialog can be displayed only once."
                 }
             else if m.itblDialog = invalid
                 response = {
-                    status : "initializing"
+                    status : "initilizing"
                     success : false,
                     message : "Pending to initiate"
                 }
@@ -54,7 +54,7 @@ function ItblOnApplicationLoaded()
                 response = {
                     status : m.messageStatus.status
                     success : false,
-                    message : "Dialog is already displayed on screen"
+                    message : "Dialog is already display on screen."
                 }
             else
                 if m.messageStatus.status <> "loaded"
@@ -63,12 +63,13 @@ function ItblOnApplicationLoaded()
                             status : m.messageStatus.status
                             success : false,
                             message : m.messageStatus.message
+                            code: m.messageStatus.code
                         }
                     else if m.messageStatus.status = "displayed"
                         response = {
                             status : m.messageStatus.status
                             success : false,
-                            message : "Dialog is already displayed on screen"
+                            message : "Dialog is already display on screen."
                         }
                     end if
                 else
@@ -77,6 +78,7 @@ function ItblOnApplicationLoaded()
                             status : m.messageStatus.status
                             success : false,
                             message : m.messageStatus.message
+                            code: m.messageStatus.code
                         }
                     else
                         ShowDialog()
