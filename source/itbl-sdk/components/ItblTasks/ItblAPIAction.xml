@@ -10,6 +10,7 @@
 				<field id="postResponse" type="integer"/>
 
 				<field id="hostUrl" type="string" />
+				<field id="jwtToken" type="string"/>
 				<field id="apiKey" type="string"/>
 				<field id="requestData" type="assocArray" value="{}"/>
 				<field id="additionalParams" type="assocArray"/>

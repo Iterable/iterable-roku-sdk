@@ -1,6 +1,7 @@
 function getRequest(path as string, data as dynamic, headers as dynamic) as object
     req = createRoTransferInstance()
     port = CreateObject("roMessagePort")
+    req.setRequest("GET")
     req.SetMessagePort(port)
 
     for each key in headers
@@ -17,66 +18,30 @@ function getRequest(path as string, data as dynamic, headers as dynamic) as obje
 
     req.SetUrl(compiledData)
     print "BaseRequests : getRequest url : " compiledData
-
-    started = req.AsyncGetToString()
-
-    if (started)
-        event = wait(40000, port)
-        if type(event) = "roUrlEvent"
-            code = event.GetResponseCode()
-            if (isSuccess(code))
-                successResponse = success(event.GetString())
-                print "BaseRequests : postRequest : Success Response : " 'response
-                return successResponse
-            else
-                if code < 0 then
-                    print "*** BaseRequests : Get API Failed. Set cancel request *** "
-                    req.asyncCancel()
-                end if
-                failureResponse = fail(code, event.GetFailureReason())
-                ' print "*** BaseRequests : Get API Failed. *** Response : " failureResponse
-                return failureResponse
-            end if
-        end if
-    end if
-
-    return fail(-1, "Timeout happen")
+    result = requestCall(req, port, invalid)
+    return result
 end function
 
-function postRequest(path as string, data as dynamic, headers as dynamic) as object
-    req = createRoTransferInstance()
-    port = CreateObject("roMessagePort")
-    req.SetMessagePort(port)
-    req.RetainBodyOnError(true)
-    req.SetUrl(path)
-    print "BaseRequests : postRequest url : " path
-    for each key in headers
-        req.AddHeader(key, headers[key])
+function postRequest(path as string, data as dynamic, headers as dynamic, retry = 1 as integer) as object
+    for i=1 to retry 
+        req = createRoTransferInstance()
+        req.setRequest("POST")
+        port = CreateObject("roMessagePort")
+        print "BaseRequests : postRequest url : retry --> "retry " for " path
+       
+        req.SetMessagePort(port)
+        req.RetainBodyOnError(true)
+        req.SetUrl(path)
+        for each key in headers
+            req.AddHeader(key, headers[key])
+        end for
+        result = requestCall(req, port, FormatJson(data))
+        if result.isSuccess
+            exit for
+        end if
+        sleep(1000)
     end for
-
-    started = req.AsyncPostFromString(FormatJson(data))
-    if (started)
-        event = wait(40000, port)
-        if type(event) = "roUrlEvent"
-            code = event.GetResponseCode()
-            if (isSuccess(code))
-                response = event.GetString()
-                print "BaseRequests : postRequest : Success Response : " response
-                successResponse = success(response)
-                return successResponse
-            else
-                if code < 0 then
-                    print "*** BaseRequests : Get API Failed. Set cancel request *** "
-                    req.asyncCancel()
-                end if
-                failureResponse = fail(code, event.GetString())
-                ' print "BaseRequests : postRequest : Fail Response : " failureResponse
-                return failureResponse
-            endif
-        endif
-    endif
-
-    return fail(-1, "Timeout happen")
+    return result
 end function
 
 
@@ -100,8 +65,18 @@ function deleteRequest(path as string, data as dynamic, headers as dynamic) as o
 
     req.SetUrl(compiledData)
     print "BaseRequests : deleteRequest url : " compiledData
+    result = requestCall(req, port, invalid)
+    return result
+end function
 
-    started = req.AsyncGetToString()
+function requestCall(request as object, port as object, data as object)
+    
+    requestMethod = LCase(request.GetRequest())
+    if requestMethod = "post"
+        started = request.AsyncPostFromString(data)
+    else 
+        started = request.AsyncGetToString()
+    end if
 
     if (started)
         event = wait(40000, port)
@@ -114,15 +89,21 @@ function deleteRequest(path as string, data as dynamic, headers as dynamic) as o
             else
                 if code < 0 then
                     print "*** BaseRequests : Get API Failed. Set cancel request *** "
-                    req.asyncCancel()
+                    request.asyncCancel()
                 end if
                 failureResponse = fail(code, event.GetFailureReason())
-                ' print "*** BaseRequests : Get API Failed. *** Response : " failureResponse
+                if event.GetString() <> invalid 
+                    failedMsg = ParseJson(event.GetString())
+                    if failedMsg <> invalid 
+                        failureResponse.message = failedMsg.msg
+                    end if
+                end if
+                print "*** BaseRequests : Get API Failed. *** Response : " failureResponse
                 return failureResponse
             end if
         end if
     end if
-
+    request.AsyncCancel()
     return fail(-1, "Timeout happen")
 end function
 
@@ -163,10 +144,11 @@ function ok(data as dynamic) as object
     return result
 end function
 
-function error(data as string) as object
+function error(code as object, data as string) as object
     result = {}
     result.ok = false
     result.error = data
+    result.code = code
 
     return result
 end function
@@ -177,10 +159,14 @@ function getErrorReason(response as dynamic) as string
     if (response.reason.Len() = 0 )
         return unknown
     else
-        if (response.code = 422 or response.code = 403 or response.code = 404)
+        if (response.code = 422 or response.code = 403 or response.code = 404 or response.code = 401)
             data = ParseJSON(response.reason)
 						if data = invalid 'If, this is not json
-								return response.reason
+                                if response.message <> invalid
+                                    return response.message
+                                else 
+								    return response.reason
+                                end if
 						end if
 
 						msg = ""
