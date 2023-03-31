@@ -16,19 +16,16 @@ end sub
 function FooBar()
     'STEP 3 : Show the in-app message'
     response = ItblOnApplicationLoaded()
-    print "response : "response
 end function
 
 ' TO do any action based on click event.'
 function OnItblClickEvent(event as dynamic)
     clickEventData = event.getData()
-    print "OnItblClickEvent : "clickEventData
 end function
 
 ' TO do any action based on Close dialog to set focus back to specific item..'
 function OnItblCloseEvent(event as dynamic)
     closeDialogData = event.getData()
-    print "OnItblDialogClose : "closeDialogData
 end function
 
 ' TO do any action based on Close dialog to set focus back to specific item..'

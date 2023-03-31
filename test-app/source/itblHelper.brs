@@ -24,7 +24,6 @@ function ItblSetEmailOrUserId(userInfo = invalid as object)
 end function
 
 function ItblOnApplicationLoaded()
-    print "ItblOnApplicationLoaded "
     response = {
         status : "NOT_LOADED"
         success : false,
@@ -119,7 +118,6 @@ end function
 
 sub _onLoadStatusChanged(event as dynamic)
     loadStatus = event.getData()
-    print "[ itbl SDK ] - load status " loadStatus
     if loadStatus = "ready"
         m._itblSDK.unobserveField("loadStatus")
         SetupItblDialog()
@@ -127,7 +125,6 @@ sub _onLoadStatusChanged(event as dynamic)
 end sub
 
 sub SetupItblDialog()
-    print "SetupItblDialog"
     m.itblDialog = CreateObject("roSGNode", "ItblSDK:ItblSDK")
     m.itblDialog.config = m.itblConfig
     m.itblDialog.observeField("messageStatus", "OnMessageStatus")
@@ -161,13 +158,11 @@ sub OnMessageStatus(event as dynamic)
     messageStatus = event.getData()
     if messageStatus <> invalid
       m.messageStatus = messageStatus
-      print "OnItblMessage LoadStatus "messageStatus
     end if
 end sub
 
 sub OnCloseDialog(event as dynamic)
   closeDialog = event.getData()
-  print "OnCloseDialog "
   if m.itblDialog <> invalid and closeDialog = true
       CloseItblSDKDialog(false)
   end if
@@ -180,7 +175,6 @@ sub OnClickEvent(event as dynamic)
 end sub
 
 sub ItblCustomEventTrack(eventName = "" as string, data = invalid as object)
-    print "ItblCustomEventTrack"
     if m.itblDialog <> invalid
       m.itblDialog.callFunc("CallItblTrack", eventName, data)
     end if

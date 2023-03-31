@@ -235,7 +235,6 @@ end sub
 function OnkeyEvent(key as string, press as boolean) as boolean
     result = false
     if press
-        print "ItblCustomDialog : onKeyEvent : key = " key " press = " press
 
         if key = "back"
             if m.errorMessage = invalid

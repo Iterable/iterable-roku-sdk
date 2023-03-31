@@ -17,7 +17,6 @@ function getRequest(path as string, data as dynamic, headers as dynamic) as obje
     end for
 
     req.SetUrl(compiledData)
-    print "BaseRequests : getRequest url : " compiledData
     result = requestCall(req, port, invalid)
     return result
 end function
@@ -27,7 +26,6 @@ function postRequest(path as string, data as dynamic, headers as dynamic, retry 
         req = createRoTransferInstance()
         req.setRequest("POST")
         port = CreateObject("roMessagePort")
-        print "BaseRequests : postRequest url : retry --> "retry " for " path
        
         req.SetMessagePort(port)
         req.RetainBodyOnError(true)

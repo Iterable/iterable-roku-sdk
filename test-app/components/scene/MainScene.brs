@@ -1,5 +1,4 @@
 sub init()
-    print "MainScene : Init "
     setLocals()
     SetControls()
     setTheme()
@@ -103,7 +102,6 @@ end sub
 function OnTimerFire()
     'STEP 3 : Show the in-app message'
     applicationLoadStatus = ItblOnApplicationLoaded()
-    print "ItblOnApplicationLoaded Status "applicationLoadStatus
 
     if not applicationLoadStatus.success
         m.lDeepLinkLabel.text = "Library Status : "
@@ -114,20 +112,17 @@ end function
 ' TO do any action based on click event.'
 function OnItblClickEvent(event as dynamic)
     clickEventData = event.getData()
-    print "OnItblClickEvent : "clickEventData
     m.lDeepLinkValue.text = clickEventData.buttonDeepLink
 end function
 
 ' TO do any action based on Close dialog to set focus back to specific item..'
 function OnItblCloseEvent(event as dynamic)
     closeDialogData = event.getData()
-    print "OnItblDialogClose : "closeDialogData
 end function
 
 function OnkeyEvent(key as string, press as boolean) as boolean
     result = false
     if press
-        print "MainScene : onKeyEvent : key = " key " press = " press
         if key = "back"
         else if key = "down" then
             if m.pWatchnow.hasFocus()

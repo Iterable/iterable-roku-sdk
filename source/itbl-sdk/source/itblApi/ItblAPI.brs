@@ -155,6 +155,5 @@ function getHeaders(apiKey, token) as object
     if token <> invalid and token <> ""
         headers["Authorization"] = "Bearer "+token
     end if
-    print "headers "headers
     return headers
 end function
