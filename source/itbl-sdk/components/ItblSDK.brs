@@ -45,7 +45,6 @@ end function
 
 
 function ItblInitialize()
-    print "Itbl init "
     m.top.messageStatus = { "status": "init", "count": 0, message: ""  }
     userInfo = getUserInfoFromRegistry()
     if userInfo <> invalid
@@ -65,7 +64,6 @@ function ItblSetUserInfo(userInfo as object)
         else 
             m.jwtToken = invalid
         end if
-        print "ItblSetUserInfo : "userInfo
         if (userInfo.email = invalid and userInfo.userId = invalid)
             m.RegistryManager.ClearUserInfo()
             status = { "status": "failed", "count": 0, message: "Call ItblSetEmailOrUserId with either of email or userId with proper value."}
@@ -84,7 +82,6 @@ end function
 
 
 function ItblShowInApp()
-    print "ItblShowInApp "
     if m.response <> invalid
         if m.response <> invalid and m.response.inAppMessages <> invalid and m.response.inAppMessages.count() > 0
             if m.itblDialog.visible = false
@@ -118,7 +115,6 @@ function OnMessageStatus(event as dynamic)
 end function
 
 function OnCloseDialog(event as dynamic)
-    print "ITBLSDK : OnCloseDialog "event.getData()
     if m.itblDialog <> invalid and m.itblDialog.content <> invalid
         clickEvent = {"buttonText": "Back Button", "action":"back", "buttonDeepLink": "Back Button", "message": "Back Button", "isBackClick": true}
         CallItblTrackInAppClick(clickEvent)
@@ -127,7 +123,6 @@ end function
 
 function OnClickEvent(event as dynamic)
     clickEvent = event.getData()
-    print "ITBLSDK : OnClickEvent "clickEvent
     if m.itblDialog <> invalid and m.itblDialog.content <> invalid
         CallItblTrackInAppClick(clickEvent)
     end if
@@ -411,7 +406,6 @@ end sub
 function OnkeyEvent(key as string, press as boolean) as boolean
     result = true
     if press
-        print "ItblSDK : onKeyEvent : key = " key " press = " press
         if key = "back"
             m.top.closeDialog = true
         end if

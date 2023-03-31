@@ -18,8 +18,6 @@ function Main(args as Dynamic)
                 exit while
             end if
         else if msgType = "roSGNodeEvent"
-            print "Main : showSGScreen : Message Type : " msgType
-            print "Main : showSGScreen : Message Field : " msg.GetField()
             ' When The AppManager want to send command back to Main
             if (msg.GetField() = "outRequest")
                 request = msg.GetData()

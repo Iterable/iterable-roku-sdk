@@ -28,7 +28,6 @@ function CreateRegistryManager() as object
             for each section in Registry.GetSectionList()
                 RegistrySection = CreateObject("roRegistrySection", section)
                 for each key in RegistrySection.GetKeyList()
-                    print "RegistryManager : ClearAllSettings : Deleting : Section : " + section + "Key : " key
                     RegistrySection.Delete(key)
                 end for
                 RegistrySection.flush()
