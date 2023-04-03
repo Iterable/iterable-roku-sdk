@@ -37,19 +37,19 @@ sub SetControls()
     m.timer = m.top.findNode("Timer")
 
     m.openSansbold56 = CreateObject("roSGNode", "Font")
-    m.openSansbold56.uri = "pkg:/fonts/OpenSans-Bold.ttf"
+    m.openSansbold56.uri = "pkg:/source/fonts/OpenSans-Bold.ttf"
     m.openSansbold56.size = 56
 
     m.openSansbold32 = CreateObject("roSGNode", "Font")
-    m.openSansbold32.uri = "pkg:/fonts/OpenSans-Bold.ttf"
+    m.openSansbold32.uri = "pkg:/source/fonts/OpenSans-Bold.ttf"
     m.openSansbold32.size = 32
 
     m.openSans_regular26 = CreateObject("roSGNode", "Font")
-    m.openSans_regular26.uri = "pkg:/fonts/OpenSans-Regular.ttf"
+    m.openSans_regular26.uri = "pkg:/source/fonts/OpenSans-Regular.ttf"
     m.openSans_regular26.size = 26
 
     m.openSans_regular30 = CreateObject("roSGNode", "Font")
-    m.openSans_regular30.uri = "pkg:/fonts/OpenSans-Regular.ttf"
+    m.openSans_regular30.uri = "pkg:/source/fonts/OpenSans-Regular.ttf"
     m.openSans_regular30.size = 30
 
     m.lWatchnow.font = m.openSansbold32
