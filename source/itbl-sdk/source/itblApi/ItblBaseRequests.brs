@@ -159,21 +159,19 @@ function getErrorReason(response as dynamic) as string
     else
         if (response.code = 422 or response.code = 403 or response.code = 404 or response.code = 401)
             data = ParseJSON(response.reason)
-						if data = invalid 'If, this is not json
-                                if response.message <> invalid
-                                    return response.message
-                                else 
-								    return response.reason
-                                end if
-						end if
-
-						msg = ""
-						if data.message <> invalid
-								msg = data.message
-						else if data.detail <> invalid
-								msg = data.detail
-						end if
-
+            if data = invalid 'If, this is not json
+                if response.message <> invalid
+                    return response.message
+                else 
+                    return response.reason
+                end if
+            end if
+            msg = ""
+            if data.message <> invalid
+                msg = data.message
+            else if data.detail <> invalid
+                msg = data.detail
+            end if
             return msg
         else
             return response.reason
