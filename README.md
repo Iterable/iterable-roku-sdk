@@ -32,8 +32,8 @@ For more information about Iterable's Roku SDK, read:
 
 - [Overview of Iterable's Roku SDK](https://support.iterable.com/hc/articles/12862373094804)
 - [Installing Iterable's Roku SDK](https://support.iterable.com/hc/articles/12862317834004)
-- [Handling Deep Links with Iterable's Roku SDK](https://support.iterable.com/hc/articles/12862295581972)
 - [Tracking Events with Iterable's Roku SDK](https://support.iterable.com/hc/articles/12862361352596)
+- [Iterable's Roku SDK: Reference](https://support.iterable.com/hc/articles/12862295581972)
 
 ## Sample projects
 
@@ -44,7 +44,7 @@ folder of this repository.
 
 Release notes:
 
-- [Release Notes - Iterable's Roku SDK](https://support.iterable.com/hc/articles/12862317834004) -
+- [Release Notes - Iterable's Roku SDK](https://support.iterable.com/hc/articles/12863830909972) -
   Release notes for significant updates to the SDK. Also, information about 
   deprecation dates and support windows.
 - [GitHub — Releases](https://github.com/Iterable/iterable-roku-sdk/releases) -
