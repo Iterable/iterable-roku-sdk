@@ -22,11 +22,11 @@ function getRequest(path as string, data as dynamic, headers as dynamic) as obje
 end function
 
 function postRequest(path as string, data as dynamic, headers as dynamic, retry = 1 as integer) as object
-    for i=1 to retry 
+    for i = 1 to retry
         req = createRoTransferInstance()
         req.setRequest("POST")
         port = CreateObject("roMessagePort")
-       
+
         req.SetMessagePort(port)
         req.RetainBodyOnError(true)
         req.SetUrl(path)
@@ -68,11 +68,11 @@ function deleteRequest(path as string, data as dynamic, headers as dynamic) as o
 end function
 
 function requestCall(request as object, port as object, data as object)
-    
+
     requestMethod = LCase(request.GetRequest())
     if requestMethod = "post"
         started = request.AsyncPostFromString(data)
-    else 
+    else
         started = request.AsyncGetToString()
     end if
 
@@ -90,9 +90,9 @@ function requestCall(request as object, port as object, data as object)
                     request.asyncCancel()
                 end if
                 failureResponse = fail(code, event.GetFailureReason())
-                if event.GetString() <> invalid 
+                if event.GetString() <> invalid
                     failedMsg = ParseJson(event.GetString())
-                    if failedMsg <> invalid 
+                    if failedMsg <> invalid
                         failureResponse.message = failedMsg.msg
                     end if
                 end if
@@ -154,25 +154,25 @@ end function
 function getErrorReason(response as dynamic) as string
     unknown = "Unknown error. Please check your input, internet connection and try again"
     print "HelpFuncs : getErrorReason : ResponseError : " response
-    if (response.reason.Len() = 0 )
+    if (response.reason.Len() = 0)
         return unknown
     else
         if (response.code = 422 or response.code = 403 or response.code = 404 or response.code = 401)
             data = ParseJSON(response.reason)
-						if data = invalid 'If, this is not json
-                                if response.message <> invalid
-                                    return response.message
-                                else 
-								    return response.reason
-                                end if
-						end if
+            if data = invalid 'If, this is not json
+                if response.message <> invalid
+                    return response.message
+                else
+                    return response.reason
+                end if
+            end if
 
-						msg = ""
-						if data.message <> invalid
-								msg = data.message
-						else if data.detail <> invalid
-								msg = data.detail
-						end if
+            msg = ""
+            if data.message <> invalid
+                msg = data.message
+            else if data.detail <> invalid
+                msg = data.detail
+            end if
 
             return msg
         else
