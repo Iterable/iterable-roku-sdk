@@ -5,6 +5,7 @@
 
     <interface>
         <field id="messageStatus" type="assocarray"/>
+        <field id="updateUserStatus" type="assocarray"/>
         <field id="closeDialog" type="boolean" />
         <field id="dialogLoaded" type="boolean" value="false"/>
         <field id="clickEvent" type="assocarray"/>

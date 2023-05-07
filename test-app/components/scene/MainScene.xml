@@ -9,6 +9,10 @@
 		<field id="ItblClickEvent" type="assocArray" alwaysNotify="true" OnChange="OnItblClickEvent"/>
 		<!-- This event triggered when user close dialog.-->
 		<field id="ItblCloseEvent" type="assocArray" alwaysNotify="true" OnChange="OnItblCloseEvent"/>
+		<!-- This event triggered when Update User Api status change.-->
+		<field id="ItblUpdateUser" type="assocArray"  alwaysNotify="true" OnChange="OnItblUpdateUserEvent"/>
+		<!-- This event triggered when Message Api status change.-->
+		<field id="ItblMessageUpdate" type="assocArray" alwaysNotify="true" OnChange="OnItblMessageUpdateEvent"/>
 		<!-- This function can be called from any component or page to show itbl dialog.-->
 		<function name="ItblOnApplicationLoaded" />
 	</interface>
@@ -109,11 +113,6 @@
 				</LayoutGroup>
 
 			</Group>
-
-			<Timer
-				id="Timer"
-				duration="7"
-				repeat="false"/>
 
 			<BusySpinner id="bsPreloader" translation="[860,420]" control="start" clockwise="true" spinInterval="0.8" visible="false"/>
 

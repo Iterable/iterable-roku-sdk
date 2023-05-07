@@ -15,12 +15,12 @@ end function
 function ItblSetEmailOrUserId(userInfo = invalid as object)
     if userInfo = invalid then userInfo = {}
     if m.itblDialog <> invalid
+        m.top.ItblUpdateUser = invalid
         status = m.itblDialog.callFunc("ItblSetUserInfo", userInfo)
     else
-        status = {"status": "waiting", "message": "Library is not yet loaded."}
+        m.top.ItblUpdateUser = {"status": "waiting", "message": "Library is not yet loaded."}
     end if
     m.setUserInfoEmail = userInfo
-    return status
 end function
 
 function ItblOnApplicationLoaded()
@@ -62,6 +62,7 @@ function ItblOnApplicationLoaded()
                             status : m.messageStatus.status
                             success : false,
                             message : m.messageStatus.message
+                            code: m.messageStatus.code
                         }
                     else if m.messageStatus.status = "displayed"
                         response = {
@@ -76,6 +77,7 @@ function ItblOnApplicationLoaded()
                             status : m.messageStatus.status
                             success : false,
                             message : m.messageStatus.message
+                            code: m.messageStatus.code
                         }
                     else
                         ShowDialog()
@@ -128,9 +130,11 @@ sub SetupItblDialog()
     m.itblDialog = CreateObject("roSGNode", "ItblSDK:ItblSDK")
     m.itblDialog.config = m.itblConfig
     m.itblDialog.observeField("messageStatus", "OnMessageStatus")
+    m.itblDialog.observeField("updateUserStatus", "OnUpdateUserStatus")
     m.itblDialog.observeField("closeDialog", "OnCloseDialog")
     m.itblDialog.observeField("clickEvent", "OnClickEvent")
     if m.setUserInfoEmail <> invalid then
+        m.top.ItblUpdateUser = invalid
         m.itblDialog.callFunc("ItblSetUserInfo", m.setUserInfoEmail)
         m.setUserInfoEmail = invalid
     else
@@ -157,7 +161,17 @@ end function
 sub OnMessageStatus(event as dynamic)
     messageStatus = event.getData()
     if messageStatus <> invalid
-      m.messageStatus = messageStatus
+        m.messageStatus = messageStatus
+        if m.top.ItblUpdateUser <> invalid and m.top.ItblUpdateUser.status = "success"
+            m.top.ItblMessageUpdate = messageStatus
+        end if
+    end if
+end sub
+
+sub OnUpdateUserStatus(event as dynamic)
+    userUpdateStatus = event.getData()
+    if userUpdateStatus <> invalid
+      m.top.ItblUpdateUser = userUpdateStatus
     end if
 end sub
 
@@ -182,6 +196,7 @@ end sub
 
 sub CloseItblSDKDialog(IsClickEvent as boolean)
     m.itblDialog.unObserveField("messageStatus")
+    m.itblDialog.unObserveField("updateUserStatus")
     m.itblDialog.unObserveField("closeDialog")
     m.itblDialog.unObserveField("clickEvent")
     m.top.removeChild(m.itblDialog)
