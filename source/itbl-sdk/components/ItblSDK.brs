@@ -64,13 +64,15 @@ function ItblSetUserInfo(userInfo as object)
         else 
             m.jwtToken = invalid
         end if
-        if (userInfo.email = invalid and userInfo.userId = invalid)
+        if ((userInfo.email = invalid and userInfo.userId = invalid) or (userInfo.email = invalid and userInfo.userId = "") or (userInfo.email = "" and userInfo.userId = invalid) )
             m.RegistryManager.ClearUserInfo()
             status = { "status": "failed", "count": 0, message: "Call ItblSetEmailOrUserId with either of email or userId with proper value."}
+            m.top.updateUserStatus = status
             m.top.messageStatus = status
         else if (userInfo.email <> invalid and userInfo.email <> "" and userInfo.userId <> invalid and userInfo.userId <> "")
             m.RegistryManager.ClearUserInfo()
             status = { "status": "failed", "count": 0, message: "Call ItblSetEmailOrUserId to set either email or userId with proper value."}
+            m.top.updateUserStatus = status
             m.top.messageStatus = status
         else if ((userInfo.email <> invalid and userInfo.email <> "") or (userInfo.userId <> invalid and userInfo.userId <> ""))
             CallItblUpdateUser(userInfo)
@@ -221,10 +223,10 @@ function CallItblApi(requestData as object, functionName as string, callBack as 
     return itblApiTask
 end function
 
-function SetErrorMessage(messageStatus, result)
+function SetErrorMessage(field, messageStatus, result)
     if result.error <> invalid and result.error <> "" then messageStatus["message"] = result.error
     if result.code <> invalid and result.code <> 0 then messageStatus["code"] = result.code
-    m.top.messageStatus = messageStatus
+    m.top.setField(field,messageStatus)
 end function
 
 sub OnItblUpdateUserAPIResponse(msg as Object)
@@ -234,11 +236,13 @@ sub OnItblUpdateUserAPIResponse(msg as Object)
         userInfo = getUserInfo(task.requestData)
         setUserInfo(userInfo)
         CallItblGetPriorityMessage(userInfo)
+        m.top.updateUserStatus = { "status": "success", message: ""  }
         m.top.messageStatus = { "status": "loading", "count": 0, message: ""  }
     else
         m.RegistryManager.ClearUserInfo()
         messageStatus = { "status": "failed", "count": 0, message: "Failed to update user email/userId."}
-        SetErrorMessage(messageStatus, result)
+        SetErrorMessage("updateUserStatus", messageStatus, result)
+        SetErrorMessage("messageStatus", messageStatus, result)
     end if
 end sub
 
@@ -259,7 +263,7 @@ sub OnItblGetPriorityMessageAPIResponse(msg as Object)
         end if
     else
       messageStatus = { "status": "failed", "count": 0, message: "Api failed to get meessage."  }
-      SetErrorMessage(messageStatus, result)
+      SetErrorMessage("messageStatus", messageStatus, result)
     end if
     m.itblGetmessage = invalid
 end sub

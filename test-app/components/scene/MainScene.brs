@@ -2,7 +2,6 @@ sub init()
     setLocals()
     SetControls()
     setTheme()
-    SetObservers()
     SetDefaultFocus()
     Initialize()
 end sub
@@ -10,7 +9,6 @@ end sub
 sub setLocals()
     m.exitCalled = false
     m.exitPopUpOpened = false
-
 end sub
 
 sub SetControls()
@@ -33,8 +31,6 @@ sub SetControls()
     m.pMoredetails = m.top.findNode("pMoredetails")
     m.lMoreDetails = m.top.findNode("lMoreDetails")
 
-
-    m.timer = m.top.findNode("Timer")
 
     m.openSansbold56 = CreateObject("roSGNode", "Font")
     m.openSansbold56.uri = "pkg:/source/fonts/OpenSans-Bold.ttf"
@@ -76,10 +72,6 @@ sub setTheme()
     m.bsPreloader.poster.height = "160"
 end sub
 
-sub SetObservers()
-    m.timer.observeField("fire", "OnTimerFire")
-end sub
-
 sub SetDefaultFocus()
     m.pMoredetails.opacity = 0.5
     m.pWatchnow.opacity = 1
@@ -95,18 +87,37 @@ sub Initialize()
     'With JWT
     jwtToken = "YOUR_JWT_HERE"
     status = ItblSetEmailOrUserId({"email":"roku@test.com", "token": jwtToken})
-    m.timer.control = "START"
 end sub
 
 
-function OnTimerFire()
-    'STEP 3 : Show the in-app message'
-    applicationLoadStatus = ItblOnApplicationLoaded()
-
-    if not applicationLoadStatus.success
-        m.lDeepLinkLabel.text = "Library Status : "
+' TO do any action based on Update User response either success or failed result will be come in userUpdateStaus.'
+function OnItblUpdateUserEvent(event as dynamic)
+    userUpdateStaus = event.getData()
+    if userUpdateStaus <> invalid
+        ' Perform any relevant action required on Update User if needed.
+        print "ItblSetEmailOrUserId Status : "userUpdateStaus
     end if
-    m.lDeepLinkValue.text = applicationLoadStatus.message
+end function
+
+
+' TO do any action based on Update User response either success or failed result will be come in userUpdateStaus.'
+function OnItblMessageUpdateEvent(event as dynamic)
+    messageStatus = event.getData()
+    if messageStatus <> invalid
+        ' Perform any relevant action required on Update User if needed.
+        print "OnItblMessageUpdateEvent : "messageStatus
+        if messageStatus <> invalid and messageStatus.status <> "loading"
+            ' here you can add additional check as well messageStatus.status = 'loaded' and  messageStatus.count > 0
+            ' Which will only call in success scenario. I have put this as sample to just display on Screen Library status with 0 message receieve.
+            applicationLoadStatus = ItblOnApplicationLoaded()
+            print "ItblOnApplicationLoaded Status "applicationLoadStatus
+
+            if not applicationLoadStatus.success
+                m.lDeepLinkLabel.text = "Library Status : "
+            end if
+            m.lDeepLinkValue.text = applicationLoadStatus.message
+        end if
+    end if
 end function
 
 ' TO do any action based on click event.'
