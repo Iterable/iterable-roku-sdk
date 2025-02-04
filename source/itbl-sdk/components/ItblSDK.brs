@@ -74,7 +74,7 @@ function ItblSetUserInfo(userInfo as object)
             m.top.messageStatus = status
         else if ((userInfo.email <> invalid and userInfo.email <> "") or (userInfo.userId <> invalid and userInfo.userId <> ""))
             CallItblUpdateUser(userInfo)
-            status = {"status": "started", message:"Call Api to update user."}
+            status = {"status": "started", message:"Call API to update user."}
         end if
     end if
     return status
@@ -258,7 +258,7 @@ sub OnItblGetPriorityMessageAPIResponse(msg as Object)
           m.top.messageStatus = { "status": "failed", "count": 0, message: "Response is invalid."  }
         end if
     else
-      messageStatus = { "status": "failed", "count": 0, message: "Api failed to get meessage."  }
+      messageStatus = { "status": "failed", "count": 0, message: "API failed to get message."  }
       SetErrorMessage(messageStatus, result)
     end if
     m.itblGetmessage = invalid
