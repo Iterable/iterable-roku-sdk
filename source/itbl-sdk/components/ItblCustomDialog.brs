@@ -17,8 +17,8 @@ sub setLocals()
     m.focusedIndex = 0
     m.defaultTheme = {
         "backgroundColor" : "#1C1C1C"
-        "defaultBoldFont" : "pkg:/ItblFonts/SourceSansPro-Bold.ttf"
-        "defaultRegularFont": "pkg:/ItblFonts/SourceSansPro-Regular.ttf",
+        "defaultBoldFont" : "font:MediumBoldSystemFont"
+        "defaultRegularFont": "font:MediumSystemFont"
         "buttonBorderColor": "0xFFFFFF"
         "buttonColorFocused": "0xB30041"
         "buttonTextColorFocused": "0xFFFFFF"
@@ -142,10 +142,10 @@ function CreateLabel(labelText as string, fontSize as integer, labelFont as obje
       label.width = m.width
       if labelFont <> invalid and FileExists(labelFont)
           fontPath = labelFont
+          font = CreateFont(fontPath, fontSize)
       else
-          fontPath = defaultFont
+          font = defaultFont
       end if
-      font = CreateFont(fontPath, fontSize)
       label.font = font
       return label
 end function
@@ -164,13 +164,12 @@ function CreateButton(id as string, item as object, fontSize as integer, dialogB
       if buttonColorUnFocused = invalid or buttonColorUnFocused = "" then buttonColorUnFocused = m.defaultTheme.buttonColorUnFocused
       if buttonTextColorFocused = invalid or buttonTextColorFocused = "" then buttonTextColorFocused = m.defaultTheme.buttonTextColorFocused
       if buttonTextColorUnFocused = invalid or buttonTextColorUnFocused = "" then buttonTextColorUnFocused = m.defaultTheme.buttonTextColorUnFocused
-
       if dialogButtonFont <> invalid and FileExists(dialogButtonFont)
           fontPath = dialogButtonFont
+          font = CreateFont(fontPath, fontSize)
       else
-          fontPath = defaultFont
+          font = defaultFont
       end if
-      font = CreateFont(fontPath, fontSize)
       borderData = {
             "height"  : m.buttonHeight,
             "width"   : m.width,
@@ -178,10 +177,11 @@ function CreateButton(id as string, item as object, fontSize as integer, dialogB
             "buttonBorderColor"    : buttonBorderColor,
             "buttonColorFocused"   : buttonColorFocused,
             "buttonColorUnFocused"   : buttonColorUnFocused,
-            "buttonTextColorUnFocused"   : buttonTextColorFocused,
+            "buttonTextColorFocused"   : buttonTextColorFocused,
             "buttonTextColorUnFocused"   : buttonTextColorUnFocused
             "font"    : font
       }
+      print "borderData  "borderData
       button = CreateObject("roSGNode", "ItblButton")
       button.id = id
       button.buttonText = item.buttonText
