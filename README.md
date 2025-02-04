@@ -53,7 +53,6 @@ Release notes:
 Support policies:
 
 - Iterable's [SDK Support Policy](https://support.iterable.com/hc/articles/360046136171)
-- Iterable's [Beta Mobile SDK Disclaimer](https://support.iterable.com/hc/articles/360034753412)
 
 Questions? Contact your Iterable customer success manager.
 
